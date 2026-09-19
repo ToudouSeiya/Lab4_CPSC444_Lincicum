@@ -12,11 +12,13 @@ const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x87ceeb);
 
 // Camera
-const camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
+const camera =     new THREE.OrthographicCamera(
+    -15,
+     15,
+     10,
+    -10,
+     0.01,
+     100
 );
 
 camera.position.set(0, 0.1, 15);
@@ -61,7 +63,7 @@ let score = 0;
 updateScoreMessage(score);
 
 // Ground Plane
-const planeGeometry = new THREE.PlaneGeometry(30, 30);
+const planeGeometry = new THREE.BoxGeometry(30, 10, 30);
 const planeMaterial = new THREE.MeshStandardMaterial({
     color: 0x44aa44
 });
@@ -70,8 +72,7 @@ const plane = new THREE.Mesh(
     planeGeometry,
     planeMaterial
 );
-
-plane.rotation.x = -Math.PI / 2;
+plane.position.set(0, -5, -0.1);
 scene.add(plane);
 
 // Lights
