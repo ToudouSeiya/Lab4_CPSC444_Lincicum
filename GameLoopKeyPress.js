@@ -13,8 +13,8 @@ scene.background = new THREE.Color(0x87ceeb);
 
 // Camera
 const camera =     new THREE.OrthographicCamera(
-    -15,
-     15,
+    -20,
+     20,
      10,
     -10,
      0.01,
@@ -63,7 +63,7 @@ let score = 0;
 updateScoreMessage(score);
 
 // Ground Plane
-const planeGeometry = new THREE.BoxGeometry(30, 10, 30);
+const planeGeometry = new THREE.BoxGeometry(40, 10, 30);
 const planeMaterial = new THREE.MeshStandardMaterial({
     color: 0x44aa44
 });
@@ -196,8 +196,8 @@ function animate() {
 
 
         // WASD Controls
-        if (keys["s"]) {
-            player.position.z += speed;
+        if (keys["a"]) {
+            player.position.x -= speed;
         }
 
         if (keys["d"]) {
@@ -211,6 +211,13 @@ function animate() {
 
         if (keys["arrowright"]) {
             player.position.x += speed;
+        }
+
+        if (player.position.x < - 20) {
+            player.position.x = - 20;
+        }
+        if (player.position.x > 20) {
+            player.position.x = 20;
         }
 
         handleCollisions();
