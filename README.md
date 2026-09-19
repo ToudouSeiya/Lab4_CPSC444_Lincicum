@@ -14,3 +14,8 @@ Open `GameLoopKeyPress.html` in a modern browser. The game loads Three.js from t
 - Arrow keys also move the cube.
 
 ## Gameplay
+- Avoid the falling cubes
+- If a falling cube hits you, you lose
+- Score points every second
+- Difficulty increases the longer you stay alive
+- Try to get the highest score

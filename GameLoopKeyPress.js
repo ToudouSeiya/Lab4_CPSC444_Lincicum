@@ -39,6 +39,24 @@ scoreMessage.style.textShadow = "2px 2px 4px #000000";
 scoreMessage.style.zIndex = "1";
 document.body.appendChild(scoreMessage);
 
+const gameOverMessage = document.createElement("div");
+gameOverMessage.style.position = "fixed";
+gameOverMessage.style.fontFamily = "sans-serif";
+gameOverMessage.style.fontWeight = "bold";
+gameOverMessage.style.textShadow = "2px 2px 4px #000000";
+gameOverMessage.style.zIndex = "1";
+gameOverMessage.style.top = "50%";
+gameOverMessage.style.right = "auto";
+gameOverMessage.style.left = "50%";
+gameOverMessage.style.transform = "translate(-50%, -50%)";
+gameOverMessage.style.width = "100%";
+gameOverMessage.style.textAlign = "center";
+gameOverMessage.style.fontSize = "15vw";
+gameOverMessage.style.color = "#ff3333";
+gameOverMessage.textContent = "GAME OVER";
+gameOverMessage.style.visibility = "hidden";
+document.body.appendChild(gameOverMessage);
+
 let score = 0;
 updateScoreMessage(score);
 
@@ -138,15 +156,7 @@ function handleCollisions() {
 
         if (objectIsColliding) {
             gameOver = true;
-            scoreMessage.style.top = "50%";
-            scoreMessage.style.right = "auto";
-            scoreMessage.style.left = "50%";
-            scoreMessage.style.transform = "translate(-50%, -50%)";
-            scoreMessage.style.width = "100%";
-            scoreMessage.style.textAlign = "center";
-            scoreMessage.style.fontSize = "15vw";
-            scoreMessage.style.color = "#ff3333";
-            scoreMessage.textContent = "GAME OVER";
+            gameOverMessage.style.visibility = "visible";
         } 
     });
 }
