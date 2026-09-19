@@ -85,6 +85,22 @@ player.position.y = 0.5;
 scene.add(player);
 
 const obstacles = [];
+let lastSpawn = 0;
+
+//spawn function
+function spawnObstacle(){
+    //create obstacle
+    let cube = new THREE.Mesh(
+        new THREE.BoxGeometry(1, 1, 1),
+        new THREE.MeshStandardMaterial({color: 0xff0000})
+    )
+    //set random x position
+    let ranX = (Math.random() -0.5) * 30;
+    cube.position.set(ranX, 10, 0);
+    obstacles.push(cube);
+    scene.add(cube);
+}
+spawnObstacle();
 
 // Keyboard State Object
 const keys = {};
@@ -134,6 +150,24 @@ function animate() {
     if (!gameOver) {
 
         requestAnimationFrame(animate);
+
+        const currentTime = performance.now();
+        if(currentTime - lastSpawn > 1000 - (10 * score)) {
+            spawnObstacle();
+            lastSpawn = currentTime;
+        s}
+
+        obstacles.forEach((object)=>
+        {
+            object.position.y-=0.05
+            if(object.position.y < -2) {
+                scene.remove(object);
+                let i = obstacles.indexOf(object);
+                obstacles.splice(i, 1);
+            }
+        }
+        );
+
 
         // WASD Controls
         if (keys["s"]) {
