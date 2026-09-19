@@ -5,6 +5,7 @@
 import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
 
 let gameOver = false;
+let lastTime = 0;
 
 // Scene
 const scene = new THREE.Scene();
@@ -129,7 +130,6 @@ function updateScoreMessage(score) {
 
 function handleCollisions() {
     playerBounds.setFromObject(player);
-    let isColliding = false;
 
     obstacles.forEach((object) => {
 
@@ -137,11 +137,17 @@ function handleCollisions() {
         const objectIsColliding = playerBounds.intersectsBox(objectBounds);
 
         if (objectIsColliding) {
-            isColliding = true;
-
-        } else {
-            
-        }
+            gameOver = true;
+            scoreMessage.style.top = "50%";
+            scoreMessage.style.right = "auto";
+            scoreMessage.style.left = "50%";
+            scoreMessage.style.transform = "translate(-50%, -50%)";
+            scoreMessage.style.width = "100%";
+            scoreMessage.style.textAlign = "center";
+            scoreMessage.style.fontSize = "15vw";
+            scoreMessage.style.color = "#ff3333";
+            scoreMessage.textContent = "GAME OVER";
+        } 
     });
 }
 
@@ -152,14 +158,23 @@ function animate() {
         requestAnimationFrame(animate);
 
         const currentTime = performance.now();
-        if(currentTime - lastSpawn > 1000 - (10 * score)) {
+        //give +1 score every second
+        if(currentTime - lastTime > 1000) {
+            score++;
+            updateScoreMessage(score);
+            lastTime = currentTime;
+        }
+        //spawn obstacles with increasing speed as score increases
+        if(currentTime - lastSpawn > 1000 - Math.min(800, score*10)) {
             spawnObstacle();
             lastSpawn = currentTime;
-        s}
+        }
+
 
         obstacles.forEach((object)=>
         {
-            object.position.y-=0.05
+            //obstacle speed gets faster as score increases
+            object.position.y-= Math.random() * (0.1) + 0.05 + (0.0025 * score);
             if(object.position.y < -2) {
                 scene.remove(object);
                 let i = obstacles.indexOf(object);
